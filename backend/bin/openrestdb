@@ -1,0 +1,2 @@
+#!/bin/sh
+java -jar $(dirname "$0")/../lib/openrestdb-2.1.jar $*

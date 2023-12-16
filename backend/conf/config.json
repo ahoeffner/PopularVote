@@ -1,0 +1,133 @@
+{
+	"instance"		: "ordb01",
+	"database"		: "postgres",
+	"topology"		: "standalone"
+	,
+	"rest":
+	{
+		"ses.dump": 60,
+		"ses.timeout": 60,
+		"sso.timeout": 20,
+		"files.root": "./files",
+		"files.tmpnames": false
+	}
+	,	
+	"security":
+	{
+		"identity":
+		{
+			"type"		: "pkcs12",
+			"alias"		: "demo",
+			"keystore"	: "./security/demo.p12",
+			"password"	: "Manager1"
+		}
+		,
+		"trust":
+		{
+			"type"		: "pkcs12",
+			"keystore"	: "./security/trust.p12",
+			"password"	: "Manager1"
+		}
+		,
+		"authenticators":
+		{
+			"database" : true,
+			"pool-tokens" : false,
+
+			"custom" :
+			[
+				{
+					"name" : "public",
+					"class" : "security.PublicAccess",
+					"enabled" : true
+				}			
+			]
+		}
+		,
+		"shared_secret" : "e448a598-9833-4732-8616-e6960a83c50c"
+	}
+	,
+	"http":
+	{
+		"Host": null,
+		"KeepAlive": 10
+		,
+		"ports":
+		{
+			"ssl"			: 7001,
+			"plain"			: 7002,
+			"admin"			: 7003,
+			"ssl.redirect" 	: false
+		}
+		,
+		"security":
+		{
+			"Cors-Allow-Domains": "localhost,127.0.0.1"
+		}
+		,
+		"deployment":
+		{
+			"path": "./app",
+			"grace.period" : 2
+		}
+		,
+		"virtual-path":
+		{
+			"endpoint": "/index.html"
+		}
+		,
+		"handlers": 
+		[
+			{"class" : "database.rest.handlers.FileHandler", "url" : "/", "methods" :  "GET"},
+			{"class" : "database.rest.handlers.AppFileHandler", "url" : "/files", "methods" :  "GET, PUT, POST"},
+			{"class" : "database.rest.handlers.RestHandler", "url" : "/", "methods" :  "POST, PATCH, DELETE, OPTIONS"}
+		]
+		,
+		"cache":
+		[
+			{"pattern": "*.js", "maxsize": 1048576},
+			{"pattern": "*.html", "maxsize": 1048576}
+		]
+		,
+		"compression":
+		[
+			{"pattern": "*.js", "minsize": 1024},
+			{"pattern": "*.html", "minsize": 1024}
+		]
+		,
+		"mimetypes":
+		[
+			{"ext": "css", "type": "text/css"},
+
+			{"ext": "txt", "type": "text/plain"},
+			{"ext": "text", "type": "text/plain"},
+
+			{"ext": "htm", "type": "text/html"},
+			{"ext": "html", "type": "text/html"},
+
+			{"ext": "gif", "type": "image/gif"},
+			{"ext": "png", "type": "image/png"},
+			{"ext": "jpg", "type": "image/jpeg"},
+			{"ext": "jpeg", "type": "image/jpeg"},
+
+			{"ext": "js", "type": "text/javascript"},
+			{"ext": "json", "type": "application/json"}
+		]
+		,
+		"buffers":
+		{
+			"network": 4094		
+		}
+	}
+	,
+	"logger":
+	{
+		"http"		: "info",
+		"rest"		: "fine",
+		"internal"	: "info",
+
+		"files"	: 10,
+		"size"	: "1MB",
+		"path" 	: "./logs"
+	}
+}
