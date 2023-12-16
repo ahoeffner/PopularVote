@@ -7,8 +7,7 @@ import database.rest.custom.SQLRewriter;
 public class Rewriter implements SQLRewriter
 {
    @Override
-   public JSONObject rewrite(JSONObject payload) throws Exception
+   public void rewrite(JSONObject payload) throws Exception
    {
-      return(payload);
    }
 }
