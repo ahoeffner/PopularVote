@@ -11,7 +11,7 @@
 		"files.root": "./files",
 		"files.tmpnames": false
 	}
-	,	
+	,
 	"security":
 	{
 		"identity":
@@ -37,10 +37,10 @@
 			"custom" :
 			[
 				{
-					"name" : "public",
-					"class" : "security.PublicAccess",
+					"name" : "PopularVoteLogin",
+					"class" : "security.PopularVoteLogin",
 					"enabled" : true
-				}			
+				}
 			]
 		}
 		,
@@ -76,7 +76,7 @@
 			"endpoint": "/index.html"
 		}
 		,
-		"handlers": 
+		"handlers":
 		[
 			{"class" : "database.rest.handlers.FileHandler", "url" : "/", "methods" :  "GET"},
 			{"class" : "database.rest.handlers.AppFileHandler", "url" : "/files", "methods" :  "GET, PUT, POST"},
@@ -116,7 +116,7 @@
 		,
 		"buffers":
 		{
-			"network": 4094		
+			"network": 4094
 		}
 	}
 	,

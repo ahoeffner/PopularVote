@@ -1,0 +1,6 @@
+cd ../source
+
+mvn package
+cp target/PopularVote-1.0.jar ../lib
+
+rm -rf target
