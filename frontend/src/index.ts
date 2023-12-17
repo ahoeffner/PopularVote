@@ -19,22 +19,7 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package security;
+import { FormsModule } from './FormsModule';
 
-import org.json.JSONObject;
-import java.util.logging.Logger;
-import database.rest.config.Paths;
-import database.rest.custom.Authenticator;
-
-
-public class PopularVoteLogin implements Authenticator
-{
-   private final static Logger logger = Logger.getLogger("rest");
-
-   @Override
-   public AuthResponse authenticate(JSONObject payload) throws Exception
-   {
-      logger.info(Paths.confdir);
-      return(new AuthResponse(true,"pv",null));
-   }
-}
+new FormsModule();
+console.log("PopularVote Version 1.0");

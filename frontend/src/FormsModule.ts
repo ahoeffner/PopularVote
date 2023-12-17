@@ -19,22 +19,23 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-package security;
+import { FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
-import org.json.JSONObject;
-import java.util.logging.Logger;
-import database.rest.config.Paths;
-import database.rest.custom.Authenticator;
+@FormsPathMapping
+([
+])
 
-
-public class PopularVoteLogin implements Authenticator
+export class FormsModule extends FormsCoreModule
 {
-   private final static Logger logger = Logger.getLogger("rest");
-
-   @Override
-   public AuthResponse authenticate(JSONObject payload) throws Exception
+   constructor()
    {
-      logger.info(Paths.confdir);
-      return(new AuthResponse(true,"pv",null));
+      super();
+      this.setup();
+   }
+
+   private async setup()
+   {
+      // Parse all and Use "implementation"
+      this.parse(document.body);
    }
 }

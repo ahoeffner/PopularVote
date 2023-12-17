@@ -1,5 +1,5 @@
 {
-	"instance"		: "ordb01",
+	"instance"		: "pv01",
 	"database"		: "postgres",
 	"topology"		: "standalone"
 	,
