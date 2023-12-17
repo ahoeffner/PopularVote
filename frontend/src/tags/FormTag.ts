@@ -19,28 +19,17 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import { Login } from './forms/login/Login';
-import { FormTag } from './tags/FormTag';
-import { FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
+import { CustomTag} from "futureforms";
+import { FormsModule } from "../FormsModule";
 
-@FormsPathMapping
-([
-   Login
-])
 
-export class FormsModule extends FormsCoreModule
+export class FormTag implements CustomTag
 {
-   constructor()
+   parse(_component: any, tag: HTMLElement, _attr: string): string | HTMLElement | HTMLElement[]
    {
-      super();
-      this.setup();
+      let form:string = tag.getAttribute("form");
+      FormsModule.showform(form,null,tag);
+      return(tag);
    }
 
-   private async setup()
-   {
-      FormProperties.TagLibrary.set("FutureForm",FormTag);
-
-      // Parse all and Use "implementation"
-      this.parse(document.body);
-   }
 }

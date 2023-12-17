@@ -5,8 +5,8 @@ module.exports =
   output:
   {
     path: __dirname+'/dist',
-    filename: 'simple.js',
-    library: "forms42core"
+    filename: 'pupularvote.js',
+    library: "futureforms"
   },
   module:
   {
