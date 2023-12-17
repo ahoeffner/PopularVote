@@ -9,9 +9,9 @@ create user pvpublic;
 grant pvuser to pvowner;
 grant pvpublic to pvowner;
 
-alter user pvuser with password 'pv'; 
-alter user pvowner with password 'pv'; 
-alter user pvpublic with password 'pv'; 
+alter user pvuser with password 'pvuser'; 
+alter user pvowner with password 'pvowner'; 
+alter user pvpublic with password 'pvpublic'; 
 
 
 create database PopularVote with owner pvowner;
@@ -34,6 +34,15 @@ create table data.users
 
 
 alter table data.users owner to pvowner;
+
+
+grant usage on schema data to pvuser;
+grant select on data.users to pvuser;
+
+
+grant usage on schema data to pvpublic;
+grant select on data.users to pvpublic;
+
 
 insert into data.users (name,email,password) values ('Alex Høffner','alex@hoeffner.net','XYZ')
 
