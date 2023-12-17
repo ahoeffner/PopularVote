@@ -67,7 +67,7 @@
 		,
 		"deployment":
 		{
-			"path": "./app",
+			"path": "../frontend/dist",
 			"grace.period" : 2
 		}
 		,

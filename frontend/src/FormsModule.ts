@@ -21,7 +21,7 @@
 
 import { Login } from './forms/login/Login';
 import { FormTag } from './tags/FormTag';
-import { FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
+import { DatabaseConnection, FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
 @FormsPathMapping
 ([
@@ -30,17 +30,26 @@ import { FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from
 
 export class FormsModule extends FormsCoreModule
 {
+   public static PUBCONN:DatabaseConnection;
+
+
    constructor()
    {
       super();
-      this.setup();
+      this.connect();
+      this.showpage();
    }
 
-   private async setup()
+   private connect(user?:string)
+   {
+      FormsModule.PUBCONN = new DatabaseConnection();
+      FormsModule.PUBCONN.authmethod = "PopularVoteLogin";
+      FormsModule.PUBCONN.connect();
+   }
+
+   private async showpage()
    {
       FormProperties.TagLibrary.set("FutureForm",FormTag);
-
-      // Parse all and Use "implementation"
       this.parse(document.body);
    }
 }
