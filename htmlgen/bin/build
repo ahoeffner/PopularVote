@@ -1,0 +1,6 @@
+cd ../source
+
+rm -rf target
+
+mvn package
+cp target/generator*.jar ../lib

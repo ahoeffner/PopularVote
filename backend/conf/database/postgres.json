@@ -4,7 +4,7 @@
 		"nowait": true,
 		"type": "postgres",
 		"test": "select user",
-		"jdbc": "jdbc:postgresql://localhost:5432/hr?user=[username]&password=[password]&ssl=false"
+		"jdbc": "jdbc:postgresql://localhost:5432/popularvote?user=[username]&password=[password]&ssl=false"
 	}
 	,
 	"repository":
@@ -39,8 +39,8 @@
 			"max": 500,
 			"idle": 10,
 			"busy": 10,
-			"username": "hr",
-			"password": "hr",
+			"username": "pvowner",
+			"password": "pvowner",
 			"auth.secret": "10c3c323-ae10-4204-85e5-50822e6ee63d"
 		}
 		,
@@ -50,8 +50,8 @@
 			"max": 50,
 			"idle": 10,
 			"busy": 10,
-			"username": "hr",
-			"password": "hr",
+			"username": "pvpublic",
+			"password": "pvpublic",
 			"auth.secret": "11c3c323-ae10-4204-85e5-50822e6ee63e"
 		}
 	}

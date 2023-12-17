@@ -1,0 +1,119 @@
+<!--
+	Custom tags:
+
+	<column-type>  : Each database-column is replaced by the appropiate <column-type>
+	<column-types> : Container for <column-type> elements
+
+	<column>  : Tag to be replaced by each database-column's html mapping
+	<group>   : Tag to be replaced by each column in each group in the mapping
+	<replace> : Tag will be replaced by the value of the attribute tag. The main usage of
+		         replace is to obtain valid template html, which is mandatory for parsing.
+
+	Custom attributes:
+
+	foreach-group: the tag enclosed by this attribute will be repeated for each group
+	foreach-column: the tag enclosed by this attribute will be repeated for each column
+
+	Variables:
+
+	Variables can be used anywhere in the html. But special rules apply when used as attributes.
+
+	$id$ : Pseudo variable that generates a unique id for a given column.
+
+	$var$ : Will be replaced by the value defined by either the column or the table.
+			  As attribute $var$ will be replaced by var="$var$" if it exists.
+			  The form ${var}$ will create an attribute named by the content of var if var exists.
+-->
+<html>
+	<head>
+		<link rel="stylesheet" href="../styles.css">
+		<link rel="stylesheet" href="../fieldset.css">
+	</head>
+
+	<body>
+		<column-types>
+			<column-type types="hidden">
+				<input type="hidden" name="$name$" from="$from$"$derived$>
+			</column-type>
+
+			<column-type types="string">
+				<input type="text" name="$name$" from="$from$" size="$size$" ${case}$ $derived$ $readonly$ $disabled$ $query$ $insert$ $lov$>
+			</column-type>
+
+			<column-type types="integer, decimal">
+				<input type="text" name="$name$" from="$from$" size="$size$" ${type}$ $derived$ $readonly$ $disabled$ $query$ $insert$ $lov$>
+			</column-type>
+
+			<column-type types="date, datetime">
+				<input $type$ name="$name$" from="$from$" ${type}$ $derived$ $readonly$ $disabled$ $query$ $insert$ $lov$>
+			</column-type>
+
+			<column-type types="yes/no">
+				<input type="checkbox" name="$name$" from="$from$" value="Y" upper $derived$ $readonly$ $disabled$ $query$ $insert$>
+			</column-type>
+		</column-types>
+
+		<fieldset class="container">
+			<legend>$from$</legend>
+			<fieldset class="section left">
+				<legend>multirow</legend>
+				<table>
+					<thead>
+						<tr>
+							<th></th>
+							<th foreach-column>
+								<label class="above" for="$id$" tabindex="0" draggable="true" ondragstart="this.startFieldDragging()">$label$</label>
+							</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr foreach="row in 0..$multirow$">
+							<td class="indicator" from="CountryDS" row="$row" type="row-indicator"></td>
+							<td foreach-column>
+								<column id="$id$" row="$row"></column>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+			<fieldset class="section below left">
+				<legend>details</legend>
+				<table>
+					<tbody>
+						<tr foreach-column>
+							<td>
+								<label class="left" for="$id$">$label$</label>
+							</td>
+							<td> : </td>
+							<td>
+								<column id="$id$"></column>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</fieldset>
+			<div class="container flex">
+				<fieldset foreach-group class="group$group$ section">
+					<legend>group$group$</legend>
+						<replace tag="table" class="table">
+							<replace tag="tbody">
+								<group>
+									<replace tag="tr">
+										<replace tag="td">
+											<label class="left group$group$" for="$id$">$label$</label>
+										</replace>
+										<replace tag="td">
+											:
+										</replace>
+										<replace tag="td">
+											<column id="$id$" class="group$group$"></column>
+										</replace>
+									</replace>
+								</group>
+							</replace>
+						</replace>
+				</fieldset>
+			</fielset>
+		</div>
+	</body>
+</html>

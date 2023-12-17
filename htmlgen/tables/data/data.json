@@ -1,0 +1,64 @@
+{
+  "mapping": [
+    {
+      "size": 19,
+      "readonly": false,
+      "query": true,
+      "name": "id",
+      "insert": true,
+      "disabled": false,
+      "label": "Id",
+      "type": "string",
+      "abbr": "id",
+      "derived": false,
+      "case": "",
+      "group": 0
+    },
+    {
+      "size": 40,
+      "readonly": false,
+      "query": true,
+      "name": "name",
+      "insert": true,
+      "disabled": false,
+      "label": "Name",
+      "type": "string",
+      "abbr": "nam",
+      "derived": false,
+      "case": "",
+      "group": 0
+    },
+    {
+      "size": 40,
+      "readonly": false,
+      "query": true,
+      "name": "email",
+      "insert": true,
+      "disabled": false,
+      "label": "Email",
+      "type": "string",
+      "abbr": "ema",
+      "derived": false,
+      "case": "",
+      "group": 0
+    },
+    {
+      "size": 40,
+      "readonly": false,
+      "query": true,
+      "name": "password",
+      "insert": true,
+      "disabled": false,
+      "label": "Password",
+      "type": "string",
+      "abbr": "pas",
+      "derived": false,
+      "case": "",
+      "group": 0
+    }
+  ],
+  "multirow": 3,
+  "alias": "dat",
+  "from": "data.users",
+  "sort": "id"
+}

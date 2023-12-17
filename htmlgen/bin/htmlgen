@@ -1,0 +1,3 @@
+#!/bin/sh
+export GeneratorClass=HTMLGen
+java -cp "$(dirname "$0")/../lib/*" generator.Generator $*

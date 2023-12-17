@@ -1,0 +1,10 @@
+source=../source
+branch=`cat branch`
+zipfile=build-$branch.zip
+
+git clone git@github.com:ahoeffner/forms42.generator.git $source
+
+cd $source
+git checkout $branch
+
+rm $zipfile

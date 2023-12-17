@@ -1,0 +1,15 @@
+{
+	"usr" : "pvowner",
+	"pwd" : "pvowner",
+	"url" : "http://localhost:7002",
+
+	"mapper" :
+	{
+		"timestamp"	: "datetime"
+	},
+
+	"styling" :
+	[
+		{"indentation" : 2}
+	]
+}
