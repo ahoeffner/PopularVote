@@ -20,12 +20,12 @@
 */
 
 import { FormTag } from './tags/FormTag';
-import { Login } from './forms/CreateUser/CreateUser';
+import { CreateUser } from './forms/CreateUser/CreateUser';
 import { ConnectionScope, DatabaseConnection, FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
 @FormsPathMapping
 ([
-   {path: "create-user", class: Login}
+   {path: "create-user", class: CreateUser}
 ])
 
 export class FormsModule extends FormsCoreModule

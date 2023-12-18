@@ -26,7 +26,7 @@ import { FormsModule } from "../../FormsModule";
 import { Alert, EventType, Form, formevent } from "futureforms";
 
 
-export class Login extends Form
+export class CreateUser extends Form
 {
    constructor()
    {
@@ -38,7 +38,6 @@ export class Login extends Form
    public async validateEmail() : Promise<boolean>
    {
       let email:string = this.getValue("users","email");
-      console.log("validate "+(new Date()));
       if (!email) return(true);
 
       let exists:boolean = await Users.checkEmail(email);

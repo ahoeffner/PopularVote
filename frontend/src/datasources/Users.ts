@@ -27,15 +27,17 @@ export class Users
    public static async checkEmail(email:string) : Promise<boolean>
    {
       let stmt:SQLStatement = new SQLStatement(FormsModule.PUBCONN);
-      stmt.sql = "select true from data.users where email = :email";
+      stmt.sql = "select count(*) from data.users where email = :email";
 
       stmt.bind("email",email);
       let success:boolean = await stmt.execute();
 
       if (!success) return(false);
+      
       let rows:any[] = await stmt.fetch();
+      let count:number = +rows[0];
 
-      return(!rows || rows.length == 0);
+      return(count == 0);
    }
 
 
