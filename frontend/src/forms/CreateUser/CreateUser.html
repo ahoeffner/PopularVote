@@ -1,25 +1,15 @@
-<div style="width:1000px;"></div>
+<div style="width:400px;"></div>
 
 <fieldset class="section below left">
-  <legend>details</legend>
   <table>
     <tbody>
-      <tr>
-        <td>
-          <label class="left" for="usr-id-1-0">Id</label>
-        </td>
-        <td>:</td>
-        <td>
-          <input type="text" name="id" from="users" size="19" integer id="usr-id-1-0">
-        </td>
-      </tr>
       <tr>
         <td>
           <label class="left" for="usr-name-1-0">Name</label>
         </td>
         <td>:</td>
         <td>
-          <input type="text" name="name" from="users" size="40" initcap id="usr-name-1-0">
+          <input type="text" name="name" from="users" size="40" initcap id="usr-name-1-0" required>
         </td>
       </tr>
       <tr>
@@ -28,7 +18,7 @@
         </td>
         <td>:</td>
         <td>
-          <input type="text" name="email" from="users" size="40" lower id="usr-email-1-0">
+          <input type="text" name="email" from="users" size="40" lower id="usr-email-1-0" required>
         </td>
       </tr>
       <tr>
@@ -37,8 +27,13 @@
         </td>
         <td>:</td>
         <td>
-          <input type="text" name="password" from="users" size="40" id="usr-pwd-1-0">
+          <input type="password" name="password" from="users" size="40" id="usr-pwd-1-0" required>
         </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td></td>
+        <td><button onclick="this.create()">Create</button></td>
       </tr>
     </tbody>
   </table>

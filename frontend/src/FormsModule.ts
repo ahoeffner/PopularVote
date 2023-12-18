@@ -19,37 +19,54 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import { Login } from './forms/login/Login';
 import { FormTag } from './tags/FormTag';
-import { DatabaseConnection, FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
+import { Login } from './forms/CreateUser/CreateUser';
+import { ConnectionScope, DatabaseConnection, FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
 @FormsPathMapping
 ([
-   Login
+   {path: "create-user", class: Login}
 ])
 
 export class FormsModule extends FormsCoreModule
 {
-   public static PUBCONN:DatabaseConnection;
-
+   public static instance:FormsModule;
+   public static PUBCONN:DatabaseConnection = new DatabaseConnection();
+   public static USRCONN:DatabaseConnection = new DatabaseConnection();
 
    constructor()
    {
       super();
+      this.setup();
       this.connect();
-      this.showpage();
+      this.parse(document.body);
+      FormsModule.instance = this;
    }
 
-   private connect(user?:string)
+   public async show(form:string)
    {
-      FormsModule.PUBCONN = new DatabaseConnection();
-      FormsModule.PUBCONN.authmethod = "PopularVoteLogin";
-      FormsModule.PUBCONN.connect();
+      let tag:HTMLElement = document.querySelector("FutureForm[form='"+form+"']");
+      tag.hidden = false;
    }
 
-   private async showpage()
+   public async hide(form:string)
+   {
+      let tag:HTMLElement = document.querySelector("FutureForm[form='"+form+"']");
+      tag.hidden = true;
+   }
+
+   private connect(email?:string, password?:string)
+   {
+      if (email == null) FormsModule.PUBCONN.connect();
+      else FormsModule.PUBCONN.connect(email,password);
+   }
+
+   private async setup()
    {
       FormProperties.TagLibrary.set("FutureForm",FormTag);
-      this.parse(document.body);
+      FormsModule.PUBCONN.authmethod = "PopularVoteLogin";
+
+      FormsModule.USRCONN.scope = ConnectionScope.stateless;
+      FormsModule.PUBCONN.scope = ConnectionScope.stateless;
    }
 }

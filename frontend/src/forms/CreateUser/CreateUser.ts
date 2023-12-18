@@ -19,36 +19,46 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import { SQLStatement } from "futureforms";
-import { FormsModule } from "../FormsModule";
+import content from './CreateUser.html';
 
-export class Users
+import { Users } from "../../datasources/Users";
+import { FormsModule } from "../../FormsModule";
+import { Alert, EventType, Form, formevent } from "futureforms";
+
+
+export class Login extends Form
 {
-   public static async checkEmail(email:string) : Promise<boolean>
+   constructor()
    {
-      let stmt:SQLStatement = new SQLStatement(FormsModule.PUBCONN);
-      stmt.sql = "select true from data.users where email = :email";
-
-      stmt.bind("email",email);
-      let success:boolean = await stmt.execute();
-
-      if (!success) return(false);
-      let rows:any[] = await stmt.fetch();
-
-      return(!rows || rows.length == 0);
+      super(content);
    }
 
 
-   public static async create(name:string, email:string, password:string) : Promise<boolean>
+   @formevent({type: EventType.WhenValidateField, field: "email"})
+   public async validateEmail() : Promise<boolean>
    {
-      let stmt:SQLStatement = new SQLStatement(FormsModule.PUBCONN);
-      stmt.sql = "insert into data.users(email,name,password) values (:email,:name,:password)";
+      let email:string = this.getValue("users","email");
+      console.log("validate '"+email+"'");
+      if (!email) return(true);
 
-      stmt.bind("name",name);
-      stmt.bind("email",email);
-      stmt.bind("password",password);
+      let exists:boolean = await Users.checkEmail(email);
 
-      let success:boolean = await stmt.execute();
+      if (!exists) Alert.warning("Email '"+email+"' is already in use","Email");
+      return(exists);
+   }
+
+
+   public async create() : Promise<boolean>
+   {
+      if (!(await this.validate())) return(false);
+      let name:string = this.getValue("users","name");
+      let email:string = this.getValue("users","email");
+      let password:string = this.getValue("users","password");
+      let success:boolean = await Users.create(name,email,password);
+
+      if (success) this.getBlock("users").clear(true);
+      FormsModule.instance.hide("create-user");
+
       return(success);
    }
 }
