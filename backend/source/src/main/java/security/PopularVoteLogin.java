@@ -34,7 +34,7 @@ public class PopularVoteLogin implements Authenticator
    @Override
    public AuthResponse authenticate(JSONObject payload) throws Exception
    {
-      logger.info(Paths.confdir);
+      //logger.info(Paths.confdir);
       return(new AuthResponse(true,"pvpublic",null));
    }
 }

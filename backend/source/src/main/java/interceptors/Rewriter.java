@@ -33,6 +33,6 @@ public class Rewriter implements SQLRewriter
    @Override
    public void rewrite(String user, JSONObject payload) throws Exception
    {
-      logger.info("rewrite "+payload.getString("sql"));
+      //logger.info("rewrite "+payload.getString("sql"));
    }
 }

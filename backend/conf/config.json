@@ -5,9 +5,9 @@
 	,
 	"rest":
 	{
-		"ses.dump": 60,
-		"ses.timeout": 20,	
+		"ses.dump": 120,
 		"sso.timeout": 20,
+		"ses.timeout": 120,	
 		"files.root": "./files",
 		"files.tmpnames": false
 	}
