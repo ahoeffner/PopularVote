@@ -1,6 +1,6 @@
 frontend/dist
 frontend/node_modules
-htmlgen/*
+htmlgen/source
 
 *.dat
 **/.DS_Store

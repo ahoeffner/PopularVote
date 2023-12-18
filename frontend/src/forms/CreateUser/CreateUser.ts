@@ -38,7 +38,7 @@ export class Login extends Form
    public async validateEmail() : Promise<boolean>
    {
       let email:string = this.getValue("users","email");
-      console.log("validate '"+email+"'");
+      console.log("validate "+(new Date()));
       if (!email) return(true);
 
       let exists:boolean = await Users.checkEmail(email);
