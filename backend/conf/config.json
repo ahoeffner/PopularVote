@@ -7,7 +7,7 @@
 	{
 		"ses.dump": 120,
 		"sso.timeout": 20,
-		"ses.timeout": 120,	
+		"ses.timeout": 3600,
 		"files.root": "./files",
 		"files.tmpnames": false
 	}

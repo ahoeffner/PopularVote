@@ -19,7 +19,6 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
-import { FormTag } from './tags/FormTag';
 import { CreateUser } from './forms/CreateUser/CreateUser';
 import { ConnectionScope, DatabaseConnection, FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
@@ -45,13 +44,13 @@ export class FormsModule extends FormsCoreModule
 
    public async show(form:string)
    {
-      let tag:HTMLElement = document.querySelector("FutureForm[form='"+form+"']");
+      let tag:HTMLElement = document.querySelector("FutureForms[form='"+form+"']");
       tag.hidden = false;
    }
 
    public async hide(form:string)
    {
-      let tag:HTMLElement = document.querySelector("FutureForm[form='"+form+"']");
+      let tag:HTMLElement = document.querySelector("FutureForms[form='"+form+"']");
       tag.hidden = true;
    }
 
@@ -63,7 +62,6 @@ export class FormsModule extends FormsCoreModule
 
    private async setup()
    {
-      FormProperties.TagLibrary.set("FutureForm",FormTag);
       FormsModule.PUBCONN.authmethod = "PopularVoteLogin";
 
       FormsModule.USRCONN.scope = ConnectionScope.stateless;
