@@ -40,6 +40,7 @@ export class FormsModule extends FormsCoreModule
       this.connect();
       this.parse(document.body);
       FormsModule.instance = this;
+      this.connect("alex@hoeffner.net","Manager1");
    }
 
    public async show(form:string)

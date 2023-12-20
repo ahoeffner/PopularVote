@@ -47,7 +47,7 @@
 		"fixed":
 		{
 			"min": 5,
-			"max": 50,
+			"max": 500,
 			"idle": 10,
 			"busy": 10,
 			"username": "pvpublic",

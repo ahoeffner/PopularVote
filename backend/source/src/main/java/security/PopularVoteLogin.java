@@ -21,20 +21,54 @@
 
 package security;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
-import java.util.logging.Logger;
-import database.rest.config.Paths;
 import database.rest.custom.Authenticator;
+import database.rest.custom.AuthenticatorAPI;
 
 
 public class PopularVoteLogin implements Authenticator
 {
-   private final static Logger logger = Logger.getLogger("rest");
-
    @Override
-   public AuthResponse authenticate(JSONObject payload) throws Exception
+   public AuthResponse authenticate(AuthenticatorAPI api, JSONObject payload) throws Exception
    {
-      //logger.info(Paths.confdir);
-      return(new AuthResponse(true,"pvpublic",null));
+      String email = null;
+      String password = null;
+
+      if (payload.has("username")) email = payload.getString("username");
+      if (payload.has("auth.secret")) password = payload.getString("auth.secret");
+
+      if (email != null)
+      {
+         String sesid = api.connect();
+         JSONObject test = api.parse("{}");
+
+         JSONArray bindvalues = new JSONArray();
+
+         JSONObject bind1 = new JSONObject();
+         JSONObject bind2 = new JSONObject();
+
+         bind1.put("name","email");
+         bind1.put("type","string");
+         bind1.put("value",email);
+
+         bind2.put("name","password");
+         bind2.put("type","string");
+         bind2.put("value",password);
+
+         bindvalues.put(bind1);
+         bindvalues.put(bind2);
+
+         test.put("session",sesid);
+         test.put("sql","select id from data.users where email = :email and password = :password");
+         test.put("bindvalues",bindvalues);
+
+         String response = api.execute(test);
+         api.logger().info(response);
+
+         api.disconnect(sesid);
+      }
+
+      return(new AuthResponse(true,null,null));
    }
 }
