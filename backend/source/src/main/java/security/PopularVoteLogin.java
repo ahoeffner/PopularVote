@@ -29,46 +29,82 @@ import database.rest.custom.AuthenticatorAPI;
 
 public class PopularVoteLogin implements Authenticator
 {
+   private static String user = "pvuser";
+
+   private static String auth =
+   """
+      {
+         'session': '$session',
+
+         'sql': '
+            select * from data.users
+            where email = :email
+            and password = :password',
+
+         bindvalues:
+         [
+            {'name': 'email', 'value': '$email', 'type': 'string'},
+            {'name': 'password', 'value': '$password', 'type': 'string'}
+         ]
+      }
+   """;
+
+
    @Override
    public AuthResponse authenticate(AuthenticatorAPI api, JSONObject payload) throws Exception
    {
+      String user = null;
       String email = null;
       String password = null;
 
-      if (payload.has("username")) email = payload.getString("username");
-      if (payload.has("auth.secret")) password = payload.getString("auth.secret");
+      if (payload.has("username"))
+         email = payload.getString("username");
+
+      if (payload.has("auth.secret"))
+         password = payload.getString("auth.secret");
 
       if (email != null)
       {
-         String sesid = api.connect();
-         JSONObject test = api.parse("{}");
+         String ses = api.connect();
+         String auth = parse(ses,email,password);
 
-         JSONArray bindvalues = new JSONArray();
+         String resp = api.execute(auth);
+         api.disconnect(ses);
 
-         JSONObject bind1 = new JSONObject();
-         JSONObject bind2 = new JSONObject();
+         JSONObject response = api.parse(resp);
 
-         bind1.put("name","email");
-         bind1.put("type","string");
-         bind1.put("value",email);
+         if (response.has("rows"))
+         {
+            JSONArray rows = response.getJSONArray("rows");
 
-         bind2.put("name","password");
-         bind2.put("type","string");
-         bind2.put("value",password);
+            if (rows.length() > 0)
+            {
+               user = PopularVoteLogin.user;
+               JSONObject row = rows.getJSONObject(0);
 
-         bindvalues.put(bind1);
-         bindvalues.put(bind2);
+               long id = row.getLong("id");
+               String name = row.getString("name");
 
-         test.put("session",sesid);
-         test.put("sql","select id from data.users where email = :email and password = :password");
-         test.put("bindvalues",bindvalues);
-
-         String response = api.execute(test);
-         api.logger().info(response);
-
-         api.disconnect(sesid);
+               api.logger().info("id: "+id+" name: "+name);
+            }
+         }
       }
 
-      return(new AuthResponse(true,null,null));
+      return(new AuthResponse(true,user,null));
+   }
+
+
+   private String parse(String sesid, String email, String password)
+   {
+      String auth = new String(PopularVoteLogin.auth);
+
+      auth = auth.replaceAll("'","\"");
+      auth = auth.replaceAll("\n"," ");
+      auth = auth.replace("$session",sesid);
+
+      auth = auth.replace("$email",email);
+      auth = auth.replace("$password",password);
+
+      return(auth);
    }
 }
