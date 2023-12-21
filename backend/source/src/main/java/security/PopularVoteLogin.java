@@ -100,10 +100,19 @@ public class PopularVoteLogin implements Authenticator
 
       auth = auth.replaceAll("'","\"");
       auth = auth.replaceAll("\n"," ");
+
+      while (auth.indexOf("\" ") >= 0)
+         auth = auth.replace("\" ","\"");
+
+      auth = auth.replaceAll("\" "," ");
+
       auth = auth.replace("$session",sesid);
 
       auth = auth.replace("$email",email);
       auth = auth.replace("$password",password);
+
+      while (auth.indexOf("  ") >= 0)
+         auth = auth.replaceAll("  "," ");
 
       return(auth);
    }
