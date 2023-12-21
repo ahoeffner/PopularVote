@@ -22,8 +22,14 @@
 package interceptors;
 
 import org.json.JSONObject;
+
+import java.sql.PreparedStatement;
+import java.util.ArrayList;
 import java.util.logging.Logger;
+
+import database.rest.custom.BindValue;
 import database.rest.custom.SQLRewriter;
+import database.rest.custom.SQLRewriterAPI;
 
 
 public class Rewriter implements SQLRewriter
@@ -31,8 +37,14 @@ public class Rewriter implements SQLRewriter
    private final static Logger logger = Logger.getLogger("rest");
 
    @Override
-   public void rewrite(String user, JSONObject payload) throws Exception
+   public void rewrite(SQLRewriterAPI api, String user, JSONObject payload) throws Exception
    {
-      //logger.info("rewrite "+payload.getString("sql"));
+      String sql = api.getSQL(payload);
+      ArrayList<BindValue> bindvalues = api.getBindValues(payload);
+      PreparedStatement stmt = api.parseSQL(sql,bindvalues);
+      String type = api.getType(payload);
+      ArrayList<String> tables = api.getTables(stmt);
+      logger.info("type "+type);
+      for(String table : tables) logger.info("table "+table);
    }
 }
