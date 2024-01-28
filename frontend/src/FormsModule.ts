@@ -20,7 +20,7 @@
 */
 
 import { CreateUser } from './forms/CreateUser/CreateUser';
-import { ConnectionScope, DatabaseConnection, FormProperties, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
+import { ConnectionScope, DatabaseConnection, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
 @FormsPathMapping
 ([
@@ -29,7 +29,6 @@ import { ConnectionScope, DatabaseConnection, FormProperties, FormsModule as For
 
 export class FormsModule extends FormsCoreModule
 {
-   public static instance:FormsModule;
    public static PUBCONN:DatabaseConnection = new DatabaseConnection();
    public static USRCONN:DatabaseConnection = new DatabaseConnection();
 
@@ -39,7 +38,6 @@ export class FormsModule extends FormsCoreModule
       this.setup();
       this.connect();
       this.parse(document.body);
-      FormsModule.instance = this;
       this.connect("alex@hoeffner.net","Manager1");
    }
 

@@ -56,7 +56,7 @@ export class CreateUser extends Form
       let success:boolean = await Users.create(name,email,password);
 
       if (success) this.getBlock("users").clear(true);
-      FormsModule.instance.hide("create-user");
+      (FormsModule.get() as FormsModule).hide("create-user");
 
       return(success);
    }

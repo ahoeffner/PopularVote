@@ -1,15 +1,15 @@
 /* Run as proviliged user */
 
-create user pvuser; 
-create user pvowner; 
-create user pvpublic; 
+create user pvuser;
+create user pvowner;
+create user pvpublic;
 
 grant pvuser to pvowner;
 grant pvpublic to pvowner;
 
-alter user pvuser with password 'pvuser'; 
-alter user pvowner with password 'pvowner'; 
-alter user pvpublic with password 'pvpublic'; 
+alter user pvuser with password 'pvuser';
+alter user pvowner with password 'pvowner';
+alter user pvpublic with password 'pvpublic';
 
 
 create database PopularVote with owner pvowner;
@@ -43,6 +43,3 @@ grant insert, select on data.users to pvpublic;
 
 
 insert into data.users (name,email,password) values ('Alex Høffner','alex@hoeffner.net','XYZ')
-
-
-
