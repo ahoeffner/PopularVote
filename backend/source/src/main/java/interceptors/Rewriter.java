@@ -21,12 +21,10 @@
 
 package interceptors;
 
-import org.json.JSONObject;
-
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
+import org.json.JSONObject;
 import java.util.logging.Logger;
-
+import java.sql.PreparedStatement;
 import database.rest.custom.BindValue;
 import database.rest.custom.SQLRewriter;
 import database.rest.custom.SQLRewriterAPI;
@@ -43,8 +41,11 @@ public class Rewriter implements SQLRewriter
       ArrayList<BindValue> bindvalues = api.getBindValues(payload);
       PreparedStatement stmt = api.parseSQL(sql,bindvalues);
       String type = api.getType(payload);
-      ArrayList<String> tables = api.getTables(stmt);
-      logger.info("type "+type);
-      for(String table : tables) logger.info("table "+table);
+
+      if (type.equals("select"))
+      {
+         ArrayList<String> tables = api.getTables(stmt);
+         for(String table : tables) logger.info("table "+table);
+      }
    }
 }

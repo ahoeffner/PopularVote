@@ -33,7 +33,7 @@ export class Users
       let success:boolean = await stmt.execute();
 
       if (!success) return(false);
-      
+
       let rows:any[] = await stmt.fetch();
       let count:number = +rows[0];
 
@@ -54,3 +54,12 @@ export class Users
       return(success);
    }
 }
+
+function generateKey(alg, scope) {
+   return new Promise(function(resolve) {
+     var genkey = crypto.subtle.generateKey(alg, true, scope)
+     genkey.then(function (pair) {
+       resolve(pair)
+     })
+   })
+ }

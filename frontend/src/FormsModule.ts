@@ -19,6 +19,7 @@
   FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 */
 
+import { Crypto } from './Crypto';
 import { CreateUser } from './forms/CreateUser/CreateUser';
 import { ConnectionScope, DatabaseConnection, FormsModule as FormsCoreModule, FormsPathMapping } from 'futureforms';
 
@@ -35,10 +36,15 @@ export class FormsModule extends FormsCoreModule
    constructor()
    {
       super();
+
+      FormsModule.alert("Hello","test");
+
+      /*
       this.setup();
       this.connect();
       this.parse(document.body);
       this.connect("alex@hoeffner.net","Manager1");
+      */
    }
 
    public async show(form:string)

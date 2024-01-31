@@ -21,6 +21,7 @@
 
 import content from './CreateUser.html';
 
+import { Crypto } from '../../Crypto';
 import { Users } from "../../datasources/Users";
 import { FormsModule } from "../../FormsModule";
 import { Alert, EventType, Form, formevent } from "futureforms";
@@ -49,14 +50,15 @@ export class CreateUser extends Form
 
    public async create() : Promise<boolean>
    {
+      let module:FormsModule = FormsModule.get();
       if (!(await this.validate())) return(false);
       let name:string = this.getValue("users","name");
       let email:string = this.getValue("users","email");
       let password:string = this.getValue("users","password");
-      let success:boolean = await Users.create(name,email,password);
+      let success:boolean = await Users.create(name,email,await Crypto.encrypt(password));
 
       if (success) this.getBlock("users").clear(true);
-      (FormsModule.get() as FormsModule).hide("create-user");
+      module.hide("create-user");
 
       return(success);
    }
