@@ -54,7 +54,7 @@
 		,
 		"ports":
 		{
-			"ssl"				: 7001,
+			"ssl"			: 7001,
 			"plain"			: 7002,
 			"admin"			: 7003,
 			"ssl.redirect" 	: false

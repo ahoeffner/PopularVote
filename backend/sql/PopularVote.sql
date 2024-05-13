@@ -11,9 +11,12 @@ alter user pvuser with password 'pvuser';
 alter user pvowner with password 'pvowner';
 alter user pvpublic with password 'pvpublic';
 
+/* try setting role to pvuser while being pvowner */
+set role pvuser;
+
 
 create database PopularVote with owner pvowner;
-
+GRANT CONNECT ON DATABASE popularvote TO pvowner;
 
 
 /* Change to pvowner */
@@ -21,7 +24,7 @@ create database PopularVote with owner pvowner;
 create schema data;
 
 
-drop table data.users ;
+drop table data.users;
 create table data.users
 (
 	id bigint generated always as identity primary key,
@@ -43,3 +46,5 @@ grant insert, select on data.users to pvpublic;
 
 
 insert into data.users (name,email,password) values ('Alex Høffner','alex@hoeffner.net','XYZ')
+
+
